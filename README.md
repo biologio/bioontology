@@ -16,9 +16,12 @@ This package enables you to perform these operations:
 Please see API documentation below.
 
 ### Installation
+From your Meteor project directory, run this
+
+    meteor add biolog:bioontology
 
 ### Setup of Biolog
-Biolog requires a **settings.json** file in the **private** directory.
+Biolog requires yout Bioontology API key to exist in the Meteor settings.  You can create a **settings.json** file in the **private** directory.
 The file looks like this.
 
     {
@@ -48,7 +51,11 @@ To run the Bioontology package tests, first stop your application.  Then run thi
 Then browse to localhost:3000
 
 ### Usage of this package
-For an example of how this package can be used in the real world to look up and store medication information, see here
+For an example of how this package can be used in the real world to look up and store medication information, see here:
+https://github.com/biologio/biolog/blob/master/packages/medications/view/meds.js
+
+For an example of how this package can be used in the real world to look up and store health condition/disease information, see here:
+https://github.com/biologio/biolog/blob/master/packages/conditions/view/conds.js
 
 ### API Documentation
 
