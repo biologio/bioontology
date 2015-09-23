@@ -72,7 +72,7 @@ Bioontology.getConditionClasses = function(condition, callback) {
                 //"ontology": "http://data.bioontology.org/ontologies/" + BIOONTOLOGY_ONTOLOGY_CONDITIONS
             });
         }
-        console.log("assembled batchData for batch lookup of disease class CUIs:" + JSON.stringify(batchData));
+        //console.log("assembled batchData for batch lookup of disease class CUIs:" + JSON.stringify(batchData));
         HTTP.post(batchUrl, {data: batchData}, function(err, result) {
             if (err) {
                 console.error("Unable to batch refine condition ancestors at url: " + batchUrl + ":\n" + err + "\nbatchData=" + JSON.stringify(batchData));
