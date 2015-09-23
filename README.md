@@ -85,3 +85,6 @@ Bioontology.annotate(text, ontologies, callback) | annotated the provided text a
 Bioontology.annotateHealth(text, callback) | annotated the provided text against our list of health of ontologies
 
 
+### Roadmap
+* need to refine my annotator to only use the mroe clinical semantic types.  For now it recognizes some spurious concepts like "blood" and "water".
+* add more unit tests
