@@ -20,8 +20,6 @@ From your Meteor project directory, run this
 
     meteor add biolog:bioontology
 
-##
-
 ### Setup
 This package requires you to have a Bioontology Bioportal server that it can search.
 Please see the Bioontology [Terms of Use](http://www.bioontology.org//terms).
@@ -81,7 +79,7 @@ Bioontology.getItemCui(item) | get the (first) CUI for an item found by searchin
 Bioontology.getItemPreferredLabel(item) | get the preferred label for an item
 Bioontology.getItemAlternateLabels(item) | get alternate labels for an item (if any)
 Bioontology.getItemSemanticTypes(item) | get semantic types for an item
-Bioontology.annotate(text, ontologies, callback) | annotated the provided text against the list of ontologies
+Bioontology.annotate(text, ontologies, semanticTypes, callback) | annotated the provided text against the list of ontologies, restricting to the provided semantic types (if any)
 Bioontology.annotateHealth(text, callback) | annotated the provided text against our list of health of ontologies
 
 

@@ -15,14 +15,16 @@ Bioontology.getBaseUrlAnnotator = function() {
  * @param q
  * @returns {string}
  */
-Bioontology.getUrlAnnotator = function(ontology, q) {
+Bioontology.getUrlAnnotator = function(ontology, semanticTypes, q) {
     var apiKey = Bioontology.getApiKey();
     var url = Bioontology.getBaseUrlAnnotator();
-    return url + "?suggest=true" +
+    url += "?suggest=true" +
         "&ontologies=" + ontology +
         "&include=prefLabel,synonym,definition,notation,cui,semanticType,properties" +
         "&display_context=false" +
         "&apikey=" + apiKey;
+    if (semanticTypes) url += "&semantic_types=" + semanticTypes;
+    return url;
 };
 
 /**
@@ -31,8 +33,8 @@ Bioontology.getUrlAnnotator = function(ontology, q) {
  * @param ontologies
  * @param callback
  */
-Bioontology.annotate = function(text, ontologies, callback) {
-    var url = Bioontology.getUrlAnnotator(ontologies, text);
+Bioontology.annotate = function(text, ontologies, semanticTypes, callback) {
+    var url = Bioontology.getUrlAnnotator(ontologies, semanticTypes, text);
     //console.log("Bioontology.annotate at URL=" + url);
     HTTP.post(url,
         {data: {"text": text}},
@@ -51,5 +53,5 @@ Bioontology.annotate = function(text, ontologies, callback) {
  * @param callback
  */
 Bioontology.annotateHealth = function(text, callback) {
-    return Bioontology.annotate(text, Bioontology.ONTOLOGIES_HEALTH, callback);
+    return Bioontology.annotate(text, Bioontology.ONTOLOGIES_HEALTH, Bioontology.SEMANTIC_TYPES_HEALTH, callback);
 };
