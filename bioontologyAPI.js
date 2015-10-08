@@ -12,7 +12,8 @@ Bioontology = {
     SEMANTIC_TYPES_HEALTH: "T002,T019,T020,T037,T046,T047,T048,T049,T050,T190,T191,T033,T184,T017,T029,T023,T030,T031,T022,T025,T026,T018,T021,T024,T116,T195,T123,T122,T118,T103,T120,T104,T200,T111,T196,T126,T131,T125,T129,T130,T197,T119,T124,T114,T109,T115,T121,T192,T110,T127,T060,T065,T058,T059,T063,T062,T061,T074,T075,T059",
     URI_MESH_TRADENAME_OF: "http://purl.bioontology.org/ontology/MESH/tradename_of",
     URI_RXNORM_TRADENAME_OF: "http://purl.bioontology.org/ontology/RXNORM/tradename_of",
-    URI_ALT_LABEL: "http://www.w3.org/2004/02/skos/core#altLabel"
+    URI_ALT_LABEL: "http://www.w3.org/2004/02/skos/core#altLabel",
+    URI_ONTOLOGIES: ""
 };
 
 Bioontology.getApiKey = function() {
@@ -158,4 +159,17 @@ Bioontology.getItemAlternateLabels = function(item) {
 Bioontology.getItemSemanticTypes = function(item) {
     if (!item) return;
     return item.semanticType;
+};
+
+/**
+ * Given an item retrieved from Bioontology, get the alternate labels (if any)
+ * @param item
+ */
+Bioontology.getItemOntology = function(item) {
+    if (!item || !item.links) return;
+    var ontologyLink = item.links.ontology;
+    if (! ontologyLink) return;
+    var ontologyArr = ontologyLink.trim("/");
+    var ontology = ontologyArr.slice(-1)[0];
+    return ontology;
 };

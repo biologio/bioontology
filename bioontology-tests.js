@@ -52,7 +52,7 @@ Tinytest.addAsync("Search Bioontology Conditions for:" + CONDITION_QUERY + " and
             test.isTrue(ancestorErrors.length===0, "Errors looking up ancestor classes: " + JSON.stringify(ancestorErrors));
             test.isNotNull(classes);
             test.isTrue(classes.length > 2, "Expected > 2 condition classes but found: " + classes.length);
-            //console.log("conditionClasses=" + JSON.stringify(classes, null, "  "));
+            console.log("conditionClasses=" + JSON.stringify(classes, null, "  "));
 
             next();
         });
@@ -134,12 +134,15 @@ Tinytest.addAsync("Bioontology Annotator", function(test, next) {
         test.isTrue(contains(altLabels, "Diabetes"));
         var semanticTypes = Bioontology.getItemSemanticTypes(a0.annotatedClass);
         test.isTrue(contains(semanticTypes, "T047"));
+        test.isTrue(Bioontology.getItemOntology(a0.annotatedClass) == "ICD10CM");
 
         test.isTrue(Bioontology.getItemCui(a1.annotatedClass) == "C0038317");
         test.isTrue(Bioontology.getItemPreferredLabel(a1.annotatedClass) == "Steroids");
+        test.isTrue(Bioontology.getItemOntology(a1.annotatedClass) == "RXNORM");
 
         test.isTrue(Bioontology.getItemCui(a2.annotatedClass) == "C1098080");
         test.isTrue(Bioontology.getItemPreferredLabel(a2.annotatedClass) == "Crestor");
+        test.isTrue(Bioontology.getItemOntology(a2.annotatedClass) == "RXNORM");
 
         next();
     });

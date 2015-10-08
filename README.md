@@ -28,7 +28,8 @@ Alternatively, you can install your own Bioontology Bioportal server using their
 
 From whichever Bioontology Bioportal server you use, you must get an API key to use it.  To get an API key, login to the BioPortal server web interface, and go to "Account".
 Your API key is displayed there.
-This package requires that your Bioontology API key exists in the Meteor settings.  You can create a **settings.json** file in the **private** directory.
+This package requires that your Bioontology API key exists in the Meteor settings.  You can create a **settings.json** file in the root of your project directory.
+
 The file looks like this.
 
     {
@@ -40,6 +41,10 @@ The file looks like this.
       }
     }
 
+Unless you have a private repository, be sure to add this to your .gitignore -  Add a line like this
+
+    settings.json
+
 
 To start your application, you will need to reference this settings file.  So instead of starting your application like this
 
@@ -47,13 +52,13 @@ To start your application, you will need to reference this settings file.  So in
 
 instead run this
 
-    meteor run --settings private/settings.json
+    meteor run --settings settings.json
 
 
 ### Running Unit Tests
 To run the Bioontology package tests, first stop your application.  Then run this:
 
-    meteor test-packages --settings private/settings.json
+    meteor test-packages --settings settings.json
 
 Then browse to localhost:3000
 
@@ -75,14 +80,16 @@ Bioontology.getConditionClasses(condition, callback) | For a given condition ite
 Bioontology.searchMeds(q, callback) | Search for medicines matching the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback - the callback to which the result array is passed
 Bioontology.getIngredients(med, callback) | Query bioontology to get ingredients for a medicine item found. Typically such medicines would have been found by calling Bioontology.searchMeds().  To the callback, send (err, medicineIngredientsArray)
 Bioontology.getMedClassesForEachIngredient(ingredients, callback) | For each medicine ingredient, lookup med classes - @param ingredients - array of med ingredients; @param callback - called when complete with arguments (error, medicineCLassesArray)
+Bioontology.searchHealth(q, callback) | Search for combination fo all disease conditions and medicines that match the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback - the callback to which the result array is passed
 Bioontology.getItemCui(item) | get the (first) CUI for an item found by searching Bioontology
 Bioontology.getItemPreferredLabel(item) | get the preferred label for an item
 Bioontology.getItemAlternateLabels(item) | get alternate labels for an item (if any)
 Bioontology.getItemSemanticTypes(item) | get semantic types for an item
+Bioontology.getItemOntology(item) | get the ontology that an item came from
 Bioontology.annotate(text, ontologies, semanticTypes, callback) | annotated the provided text against the list of ontologies, restricting to the provided semantic types (if any)
 Bioontology.annotateHealth(text, callback) | annotated the provided text against our list of health of ontologies
 
 
 ### Roadmap
-* need to refine my annotator to only use the mroe clinical semantic types.  For now it recognizes some spurious concepts like "blood" and "water".
+* Refine the semantic types retrieved.  For now it recognizes some spurious concepts like "blood" and "water".
 * add more unit tests
