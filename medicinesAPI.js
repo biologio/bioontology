@@ -155,7 +155,7 @@ Bioontology.getMedClassesForEachClassUri = function(classUris, callback) {
         HTTP.get(lookupUrl, function (err, response) {
             if (err) return callback(err);
             var json = JSON.parse(response.content);
-            console.log("\n\n****For drug class: " + uri + ", found these details: " + JSON.stringify(json, null, "  "));
+            //console.log("\n\n****For drug class: " + uri + ", found these details: " + JSON.stringify(json, null, "  "));
             //classes = classes.concat(json);
             classes.push(json);
             asyncCallback();

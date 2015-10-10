@@ -169,7 +169,7 @@ Bioontology.getItemOntology = function(item) {
     if (!item || !item.links) return;
     var ontologyLink = item.links.ontology;
     if (! ontologyLink) return;
-    var ontologyArr = ontologyLink.trim("/");
+    var ontologyArr = ontologyLink.split("/");
     var ontology = ontologyArr.slice(-1)[0];
     return ontology;
 };
