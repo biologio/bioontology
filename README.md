@@ -75,19 +75,19 @@ Function      | Description
 ------------- | -------------
 Bioontology.getUrlSearch(ontologies, q) | Get the URL to look up any entity within the provided ontology or comma-separated list of ontologies
 Bioontology.getUrlSearchSemanticTypes(ontologies, semanticTypes, q) | Get the URL to look up any entity within the provided ontologies, limiting to the list of semantic types
-Bioontology.searchConditions(q, callback) | Search for conditions matching the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback - the callback to which the result array is passed
-Bioontology.getConditionClasses(condition, callback) | For a given condition item (found by calling searchConditions() ), lookup its classes (parents, grandparents, ... in the ontology).  To the callback, send (err, conditionClassesArray).
-Bioontology.searchMeds(q, callback) | Search for medicines matching the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback - the callback to which the result array is passed
-Bioontology.getIngredients(med, callback) | Query bioontology to get ingredients for a medicine item found. Typically such medicines would have been found by calling Bioontology.searchMeds().  To the callback, send (err, medicineIngredientsArray)
-Bioontology.getMedClassesForEachIngredient(ingredients, callback) | For each medicine ingredient, lookup med classes - @param ingredients - array of med ingredients; @param callback - called when complete with arguments (error, medicineCLassesArray)
-Bioontology.searchHealth(q, callback) | Search for combination fo all disease conditions and medicines that match the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback - the callback to which the result array is passed
+Bioontology.searchConditions(q, callback) | Search for conditions matching the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback(error, resultArray) - the callback to which the result array is passed
+Bioontology.getConditionClasses(condition, callback) | For a given condition item (found by calling searchConditions() ), lookup its classes (parents, grandparents, ... in the ontology).  @param callback(error, conditionClassesArray).
+Bioontology.searchMeds(q, callback) | Search for medicines matching the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback(error, resultArray) - the callback to which the result array is passed
+Bioontology.getIngredients(med, callback) | Query bioontology to get ingredients for a medicine item found. Typically such medicines would have been found by calling Bioontology.searchMeds().  @param callback(error, medicineIngredientsArray)
+Bioontology.getMedClassesForEachIngredient(ingredients, callback) | For each medicine ingredient, lookup med classes - @param ingredients - array of med ingredients; @param callback(error, medicineCLassesArray)
+Bioontology.searchHealth(q, callback) | Search for combination of all disease conditions and medicines that match the provided query - @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality; @param callback(error, result) - the callback to which the result array is passed
 Bioontology.getItemCui(item) | get the (first) CUI for an item found by searching Bioontology
 Bioontology.getItemPreferredLabel(item) | get the preferred label for an item
 Bioontology.getItemAlternateLabels(item) | get alternate labels for an item (if any)
 Bioontology.getItemSemanticTypes(item) | get semantic types for an item
 Bioontology.getItemOntology(item) | get the ontology that an item came from
-Bioontology.annotate(text, ontologies, semanticTypes, callback) | annotated the provided text against the list of ontologies, restricting to the provided semantic types (if any)
-Bioontology.annotateHealth(text, callback) | annotated the provided text against our list of health of ontologies
+Bioontology.annotate(text, ontologies, semanticTypes, callback) | annotated the provided text against the list of ontologies, restricting to the provided semantic types (if any); @param callback(error, resultArray) - the callback to which the result array is passed
+Bioontology.annotateHealth(text, callback) | annotated the provided text against our list of health of ontologies; @param callback(error, resultArray) - the callback to which the result array is passed
 
 
 ### Roadmap
