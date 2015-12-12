@@ -10,11 +10,13 @@ Package.onUse(function(api) {
     api.versionsFrom('1.1.0.3');
     api.use('http@1.1.0');
     api.use('peerlibrary:async@0.9.2_1');
+    api.use('biolog:biolog-core');
     api.addFiles([
-        'bioontologyAPI.js', 'conditionsAPI.js', 'medicinesAPI.js', 'healthAPI.js', 'annotatorAPI.js'
+        'bioontologyAPI.js', 'conditionsAPI.js', 'medicinesAPI.js', 'healthAPI.js', 'annotatorAPI.js', 'eventsApi.js'
         ],
         ['client', 'server']);
-    api.export('Bioontology', ['client', 'server']);
+    //api.export('Bioontology', ['client', 'server']);
+    api.addFiles('bioontology-server.js', 'server');
 });
 
 Package.onTest(function(api) {

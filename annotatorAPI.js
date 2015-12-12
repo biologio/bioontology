@@ -5,8 +5,8 @@
 
 
 
-Bioontology.getBaseUrlAnnotator = function() {
-    return Bioontology.getBaseUrl() + "/annotator";
+biolog.Bioontology.getBaseUrlAnnotator = function() {
+    return biolog.Bioontology.getBaseUrl() + "/annotator";
 };
 
 /**
@@ -15,9 +15,9 @@ Bioontology.getBaseUrlAnnotator = function() {
  * @param q
  * @returns {string}
  */
-Bioontology.getUrlAnnotator = function(ontology, semanticTypes, q) {
-    var apiKey = Bioontology.getApiKey();
-    var url = Bioontology.getBaseUrlAnnotator();
+biolog.Bioontology.getUrlAnnotator = function(ontology, semanticTypes, q) {
+    var apiKey = biolog.Bioontology.getApiKey();
+    var url = biolog.Bioontology.getBaseUrlAnnotator();
     url += "?suggest=true" +
         "&ontologies=" + ontology +
         "&include=prefLabel,synonym,definition,notation,cui,semanticType,properties" +
@@ -33,9 +33,9 @@ Bioontology.getUrlAnnotator = function(ontology, semanticTypes, q) {
  * @param ontologies
  * @param callback
  */
-Bioontology.annotate = function(text, ontologies, semanticTypes, callback) {
-    var url = Bioontology.getUrlAnnotator(ontologies, semanticTypes, text);
-    //console.log("Bioontology.annotate at URL=" + url);
+biolog.Bioontology.annotate = function(text, ontologies, semanticTypes, callback) {
+    var url = biolog.Bioontology.getUrlAnnotator(ontologies, semanticTypes, text);
+    //console.log("biolog.Bioontology.annotate at URL=" + url + "; text=", text);
     HTTP.post(url,
         {data: {"text": text}},
         function (err, response) {
@@ -48,10 +48,10 @@ Bioontology.annotate = function(text, ontologies, semanticTypes, callback) {
 };
 
 /**
- * Annotate a block of text against Bioontology
+ * Annotate a block of text against biolog.Bioontology
  * @param text
  * @param callback
  */
-Bioontology.annotateHealth = function(text, callback) {
-    return Bioontology.annotate(text, Bioontology.ONTOLOGIES_HEALTH, Bioontology.SEMANTIC_TYPES_HEALTH, callback);
+biolog.Bioontology.annotateHealth = function(text, callback) {
+    return biolog.Bioontology.annotate(text, biolog.Bioontology.ONTOLOGIES_HEALTH, biolog.Bioontology.SEMANTIC_TYPES_HEALTH, callback);
 };

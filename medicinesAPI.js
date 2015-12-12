@@ -3,8 +3,8 @@
  * @param q
  * @returns {string}
  */
-Bioontology.getUrlSearchMeds = function(q) {
-    return Bioontology.getUrlSearchSemanticTypes(Bioontology.ONTOLOGIES_MEDS, Bioontology.SEMANTIC_TYPES_MEDS, q);
+biolog.Bioontology.getUrlSearchMeds = function(q) {
+    return biolog.Bioontology.getUrlSearchSemanticTypes(biolog.Bioontology.ONTOLOGIES_MEDS, biolog.Bioontology.SEMANTIC_TYPES_MEDS, q);
 };
 
 /**
@@ -12,29 +12,33 @@ Bioontology.getUrlSearchMeds = function(q) {
  * @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality
  * @param callback - the callback to which the result array is passed
  */
-Bioontology.searchMeds = function(q, callback) {
-    var url = Bioontology.getUrlSearchMeds(q);
+biolog.Bioontology.searchMeds = function(q, callback) {
+    var url = biolog.Bioontology.getUrlSearchMeds(q);
+    //console.log("biolog.Bioontology.searchMeds:", url);
     HTTP.get(url, function (err, response) {
         if (err) {
+            console.error("biolog.Bioontology.searchMeds ERROR", err);
             return callback(err);
         }
+        //console.log("biolog.Bioontology.searchMeds:", response);
         var json = JSON.parse(response.content);
+
         return callback(null, json.collection);
     });
 };
 
 /**
  * Query bioontology to get ingredients for a medicine item found.
- * Typically such medicines would have been found by calling Bioontology.searchMeds()
+ * Typically such medicines would have been found by calling biolog.Bioontology.searchMeds()
  * @param med
  * @param callbackForEachIngredient
  * @param callback
  * @returns {*}
  */
-Bioontology.getIngredients = function(med, callback) {
-    var uriEntries = med.properties[Bioontology.URI_MESH_TRADENAME_OF];
+biolog.Bioontology.getIngredients = function(med, callback) {
+    var uriEntries = med.properties[biolog.Bioontology.URI_MESH_TRADENAME_OF];
     if (!uriEntries) {
-        uriEntries = med.properties[Bioontology.URI_RXNORM_TRADENAME_OF];
+        uriEntries = med.properties[biolog.Bioontology.URI_RXNORM_TRADENAME_OF];
     }
 
     var ingredients = [];
@@ -54,7 +58,7 @@ Bioontology.getIngredients = function(med, callback) {
     }
     async.each(genericUris, function(uri, asyncCallback) {
         //lookup each uri and add it as a medication/ingredient
-        var lookupUrl = Bioontology.getUrlLookupClass(Bioontology.ONTOLOGIES_MEDS, uri);
+        var lookupUrl = biolog.Bioontology.getUrlLookupClass(biolog.Bioontology.ONTOLOGIES_MEDS, uri);
         HTTP.get(lookupUrl, function (err, response) {
             if (err) {
                 console.error("Unable to look up generic ar url: " + lookupUrl + ":\n" + err);
@@ -78,19 +82,19 @@ Bioontology.getIngredients = function(med, callback) {
  * @param callback - called when complete
  * @returns {*}
  */
-Bioontology.getMedClassesForEachIngredient = function(ingredients, callback) {
+biolog.Bioontology.getMedClassesForEachIngredient = function(ingredients, callback) {
     var classes = [];
     var cuis = [];
     for (var ii in ingredients) {
         var ingredient = ingredients[ii];
-        var cui = Bioontology.getItemCui(ingredient);
+        var cui = biolog.Bioontology.getItemCui(ingredient);
         cuis.push(cui);
     }
     if (!cuis) return callback("No ingredients with CUIs were provided");
     console.log("\n\n**** getMedClassesForEachIngredient: lookup these ingredients:" + cuis);
     async.each(cuis, function(cui, asyncCallback) {
         //lookup each uri and add it as a medication/ingredient
-        var lookupUrl = Bioontology.getUrlLookupMesh(cui);
+        var lookupUrl = biolog.Bioontology.getUrlLookupMesh(cui);
         console.log("\n\nLooking up med classes at: " + lookupUrl);
         HTTP.get(lookupUrl, function (err, response) {
             if (err) {
@@ -125,7 +129,7 @@ Bioontology.getMedClassesForEachIngredient = function(ingredients, callback) {
             }
 
             console.log("For ingredient: " + cui + ", found this link to class info: " + uris);
-            Bioontology.getMedClassesForEachClassUri(uris, function(err, subClasses) {
+            biolog.Bioontology.getMedClassesForEachClassUri(uris, function(err, subClasses) {
                 if (err) {
                     console.error("ERROR looking up classes for ingredient: " + cui + ": " + err);
                     return asyncCallback(err);
@@ -146,11 +150,11 @@ Bioontology.getMedClassesForEachIngredient = function(ingredients, callback) {
  * @param callback
  * @returns {*} calls callback, with first arg=error and 2nd arg=an array of classes
  */
-Bioontology.getMedClassesForEachClassUri = function(classUris, callback) {
+biolog.Bioontology.getMedClassesForEachClassUri = function(classUris, callback) {
     if (!classUris) return callback("No class URIs were provided");
     var classes = [];
     async.each(classUris, function(uri, asyncCallback) {
-        var lookupUrl = Bioontology.getUrlLookupClass("MESH", uri);
+        var lookupUrl = biolog.Bioontology.getUrlLookupClass("MESH", uri);
         console.log("\n\nGetting med class at: " + lookupUrl);
         HTTP.get(lookupUrl, function (err, response) {
             if (err) return callback(err);
@@ -165,10 +169,10 @@ Bioontology.getMedClassesForEachClassUri = function(classUris, callback) {
     });
 };
 
-//Bioontology.getMedClassesForEachClassUri = function(classUris, callbackForEachMedClass, callback) {
+//biolog.Bioontology.getMedClassesForEachClassUri = function(classUris, callbackForEachMedClass, callback) {
 //    if (!classUris) return callback("No class URIs were provided");
 //    async.each(classUris, function(uri, asyncCallback) {
-//        var lookupUrl = Bioontology.getUrlLookupClass("MESH", uri);
+//        var lookupUrl = biolog.Bioontology.getUrlLookupClass("MESH", uri);
 //        //console.log("\n\nGetting med class at: " + lookupUrl);
 //        HTTP.get(lookupUrl, function (err, response) {
 //            var json = JSON.parse(response.content);

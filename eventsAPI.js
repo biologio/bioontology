@@ -1,5 +1,5 @@
 /**
- * Created by dd on 10/8/15.
+ * Created by dd on 9/18/15.
  */
 
 /**
@@ -9,8 +9,12 @@
  * @param searchUrl
  * @returns {string}
  */
-biolog.Bioontology.getUrlSearchHealth = function(q) {
-    return biolog.Bioontology.getUrlSearch(biolog.Bioontology.ONTOLOGIES_HEALTH, q);
+biolog.Bioontology.getUrlSearchEvents = function(q) {
+    return biolog.Bioontology.getUrlSearchSemanticTypes(biolog.Bioontology.ONTOLOGIES_EVENTS, biolog.Bioontology.SEMANTIC_TYPES_EVENTS, q);
+};
+
+biolog.Bioontology.getParamsSearchConditions = function(q) {
+    return biolog.Bioontology.getParamsSearch(biolog.Bioontology.ONTOLOGIES_EVENTS, q);
 };
 
 /**
@@ -18,8 +22,9 @@ biolog.Bioontology.getUrlSearchHealth = function(q) {
  * @param q - the query to search.  Expected to be a string that the user is entering in a text box.  Optimized for typeahead functionality
  * @param callback - the callback to which the result array is passed
  */
-biolog.Bioontology.searchHealth = function(q, callback) {
-    var url = biolog.Bioontology.getUrlSearchHealth(q);
+biolog.Bioontology.searchEvents = function(q, callback) {
+    var url = biolog.Bioontology.getUrlSearchEvents(q);
+    console.log("biolog.Bioontology.searchEvents:", url);
     HTTP.get(url, function (err, response) {
         if (err) {
             return callback(err);
@@ -28,3 +33,4 @@ biolog.Bioontology.searchHealth = function(q, callback) {
         return callback(null, json.collection);
     });
 };
+
