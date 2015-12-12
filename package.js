@@ -1,6 +1,6 @@
 Package.describe({
   name: 'biolog:bioontology',
-  version: '0.0.8',
+  version: '0.0.9',
   summary: 'Meteor package for use of Bioontology Bioportal server',
   git: 'https://github.com/biologio/bioontology.git',
   documentation: 'README.md'
