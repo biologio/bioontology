@@ -1,6 +1,6 @@
 Package.describe({
   name: 'biolog:bioontology',
-  version: '0.0.9',
+  version: '0.0.10',
   summary: 'Meteor package for use of Bioontology Bioportal server',
   git: 'https://github.com/biologio/bioontology.git',
   documentation: 'README.md'
@@ -10,7 +10,7 @@ Package.onUse(function(api) {
     api.versionsFrom('1.1.0.3');
     api.use('http@1.1.0');
     api.use('peerlibrary:async@0.9.2_1');
-    api.use('biolog:biolog-core');
+    api.use('biolog:biolog-core@0.0.3');
     api.addFiles([
         'bioontologyAPI.js', 'conditionsAPI.js', 'medicinesAPI.js', 'healthAPI.js', 'annotatorAPI.js', 'eventsApi.js'
         ],
