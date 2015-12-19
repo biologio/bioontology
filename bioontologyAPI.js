@@ -26,7 +26,7 @@ biolog.Bioontology.getBaseUrl = function() {
     if (Meteor.settings.public.bioontology.baseUrl) {
         return Meteor.settings.public.bioontology.baseUrl;
     }
-    return "http://data.bioontology.org";
+    return "https://data.bioontology.org";
 };
 
 biolog.Bioontology.getBaseUrlSearch = function() {
